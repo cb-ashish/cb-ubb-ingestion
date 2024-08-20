@@ -14,7 +14,7 @@ servers:
 - description: Local Server
   url: http://localhost:3000
 security:
-- FullAccessApiKey: []
+- X-API-Key: []
 paths:
   /usage:
     post:
@@ -109,7 +109,7 @@ components:
           id: e4b6iv0imzuj5
       type: object
   securitySchemes:
-    FullAccessApiKey:
-      in: query
-      name: API Key
+    X-API-Key:
+      in: header
+      name: X-API-Key
       type: apiKey

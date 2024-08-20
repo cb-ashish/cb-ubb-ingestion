@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-20T10:37:27.792356+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-20T23:15:04.067067+05:30[Asia/Kolkata]")
 @Validated
 @Tag(name = "Usage", description = "the Usage API")
 public interface UsageApi {
@@ -66,7 +66,7 @@ public interface UsageApi {
             })
         },
         security = {
-            @SecurityRequirement(name = "FullAccessApiKey")
+            @SecurityRequirement(name = "X-API-Key")
         }
     )
     @RequestMapping(

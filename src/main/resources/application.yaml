@@ -22,3 +22,6 @@ health:
       DOWN: 503
       OUT_OF_SERVICE: 503
 
+logging:
+  level:
+    org.springframework.security: DEBUG

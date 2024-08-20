@@ -57,9 +57,9 @@
                             <modelPackage>com.chargebee.ingestion.models</modelPackage>
                             <output>${project.basedir}</output>
                             <skipOverwrite>true</skipOverwrite> <!-- Avoid overwriting any existing files -->
-                            <generateApis>false</generateApis> <!-- Do not generate API controllers -->
+                            <generateApis>true</generateApis> <!-- Do not generate API controllers -->
                             <generateSupportingFiles>false</generateSupportingFiles> <!-- Do not generate supporting files -->
-                            <generateModelTests>false</generateModelTests> <!-- Do not generate model test files -->
+                            <generateModelTests>true</generateModelTests> <!-- Do not generate model test files -->
                             <configOptions>
                                 <interfaceOnly>false</interfaceOnly>
                                 <useTags>true</useTags>
