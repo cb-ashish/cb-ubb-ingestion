@@ -2,3 +2,16 @@ kafka:
   bootstrap-servers: your-msk-cluster-endpoint:9092
   topic:
     usage-records: usage-records-topic
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info  # Ensure "health" is included
+  endpoint:
+    health:
+      show-details: always
+  health:
+    status:
+      http-mapping:
+        DOWN: 503
+        OUT_OF_SERVICE: 503

@@ -28,5 +28,7 @@ ARG JAR_VERSION=1.0.0
 # Copy the built JAR file from the previous stage
 COPY --from=build /cb-ubb-ingestion-service/target/cb-ubb-ingestion-service-${JAR_VERSION}.jar cb-ubb-ingestion-service.jar
 
+EXPOSE 8080
+
 # Specify the command to run the application
 ENTRYPOINT ["java", "-jar", "cb-ubb-ingestion-service.jar"]
