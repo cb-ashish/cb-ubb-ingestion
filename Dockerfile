@@ -5,7 +5,7 @@ FROM amazoncorretto:22-alpine AS build
 RUN apk add --no-cache maven
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /cb-ubb-ingestion-service
 
 # Copy the pom.xml and any other necessary files for Maven to resolve dependencies
 COPY pom.xml ./
@@ -20,10 +20,13 @@ RUN mvn clean package -DskipTests
 FROM amazoncorretto:22-alpine
 
 # Set the working directory inside the container
-WORKDIR /app
+WORKDIR /cb-ubb-ingestion-service
+
+# Define a build argument for the JAR file version
+ARG JAR_VERSION=1.0.0
 
 # Copy the built JAR file from the previous stage
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /cb-ubb-ingestion-service/target/cb-ubb-ingestion-service-${JAR_VERSION}.jar cb-ubb-ingestion-service.jar
 
 # Specify the command to run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "cb-ubb-ingestion-service.jar"]
