@@ -40,7 +40,8 @@ jobs:
           docker build --build-arg JAR_VERSION=1.0.0 -t cb-ubb-ingestion-service .
           docker tag cb-ubb-ingestion-service:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cb-ubb-ingestion-service:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cb-ubb-ingestion-service:latest
+
       - name: Log out of Amazon ECR
-          if: always()
-          run: |
-            docker logout ${{ steps.login-ecr.outputs.registry }}
+        if: always()
+        run: |
+          docker logout ${{ steps.login-ecr.outputs.registry }}
