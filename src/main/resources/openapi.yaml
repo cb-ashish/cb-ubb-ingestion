@@ -1,0 +1,115 @@
+openapi: 3.0.3
+info:
+  contact:
+    email: support@example.com
+    name: API Support
+  description: API for ingesting and managing usage data.
+  title: Usage Ingestion API
+  version: 1.0.0
+servers:
+- description: Production Server
+  url: https://api.example.com/v1
+- description: Staging Server
+  url: https://staging-api.example.com/v1
+- description: Local Server
+  url: http://localhost:3000
+security:
+- FullAccessApiKey: []
+paths:
+  /usage:
+    post:
+      description: Submit a new usage record to the system.
+      operationId: ingestUsage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsageRecord'
+          application/xml:
+            schema:
+              properties: {}
+              type: object
+        description: ""
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageRecord'
+          description: Usage record created successfully.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Invalid input.
+        "401":
+          description: Unauthorized
+        "500":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Internal server error.
+      summary: Ingest a new usage record
+      tags:
+      - Usage
+      x-content-type: application/json
+      x-accepts: application/json
+      x-tags:
+      - tag: Usage
+components:
+  schemas:
+    UsageRecord:
+      example:
+        attributes:
+          key: attributes
+        id: id
+        timestamp: 2000-01-23T04:56:07.000+00:00
+      properties:
+        id:
+          description: Unique idempotency key for the usage record.
+          type: string
+        timestamp:
+          description: Indicates the usage record timestamp.
+          format: date-time
+          type: string
+          x-stoplight:
+            id: qypl1nictgm27
+        attributes:
+          additionalProperties:
+            description: Value associated with the metadata key.
+            type: string
+            x-stoplight:
+              id: e4b6iv0imzuj5
+          type: object
+      required:
+      - attributes
+      - timestamp
+      type: object
+    Error:
+      properties:
+        code:
+          description: Error code.
+          format: int32
+          type: integer
+        message:
+          description: Error message.
+          type: string
+      required:
+      - code
+      - message
+      type: object
+    UsageAttribute:
+      additionalProperties:
+        description: Value associated with the metadata key.
+        type: string
+        x-stoplight:
+          id: e4b6iv0imzuj5
+      type: object
+  securitySchemes:
+    FullAccessApiKey:
+      in: query
+      name: API Key
+      type: apiKey

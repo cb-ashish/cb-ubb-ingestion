@@ -1,0 +1,4 @@
+kafka:
+  bootstrap-servers: your-msk-cluster-endpoint:9092
+  topic:
+    usage-records: usage-records-topic
