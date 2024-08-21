@@ -165,5 +165,17 @@
             <artifactId>logback-core</artifactId>
             <version>1.5.7</version>
         </dependency>
+        <!-- Logback for Spring Boot -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-logging</artifactId>
+        </dependency>
+        <!-- AWS CloudWatch Logback Appender -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-logs</artifactId>
+            <version>1.12.220</version> <!-- Use the latest stable version -->
+        </dependency>
+
     </dependencies>
 </project>
