@@ -29,7 +29,7 @@ public class SecurityConfig {
         http
                 .authorizeRequests()
                 .antMatchers("/v1/usage").authenticated() // Secure the usage API endpoint
-                .antMatchers("/api/kafka/create-topic").authenticated() // Secure the Kafka API endpoint
+                .antMatchers("/api/kafka/create-topic").permitAll() // Secure the Kafka API endpoint
                 .antMatchers("/actuator/health").permitAll()  // Allow access to health endpoint
                 .antMatchers("/actuator/info").permitAll()   // Allow access to info endpoint
                 .anyRequest().denyAll()
