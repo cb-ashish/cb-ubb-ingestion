@@ -24,4 +24,11 @@ health:
 
 logging:
   level:
-    org.springframework.security: DEBUG
+    root: INFO
+    com.chargebee.ingestion: DEBUG  # Set DEBUG level for your package
+  pattern:
+    console:
+      level: "%5p"
+      date: "%d{yyyy-MM-dd HH:mm:ss}"
+      logger: "%c{1}"
+      message: "%m%n"
