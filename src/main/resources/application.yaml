@@ -34,6 +34,6 @@ logging:
   cloudwatch:
     enabled: false
     log-group: ecs-cb-ubb-ingestion-service-stream-logs
-    log-stream: ecs-log-stream
+    log-stream: ecs-cb-ubb-ingestion-service-stream-logs
 aws:
   region: us-east-1  # AWS region for CloudWatch and other services

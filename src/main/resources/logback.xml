@@ -8,7 +8,8 @@
 
     <appender name="CLOUDWATCH" class="com.amazonaws.services.logs.logback.CloudWatchAppender">
         <logGroupName>ecs-cb-ubb-ingestion-service-stream-logs</logGroupName>
-        <logStreamName>ecs-log-stream</logStreamName>
+        <logStreamName>ecs-cb-ubb-ingestion-service-stream-logs</logStreamName>
+        <awsRegion>us-east-1</awsRegion>
     </appender>
 
     <root level="INFO">
