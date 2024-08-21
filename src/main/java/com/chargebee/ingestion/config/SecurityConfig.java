@@ -53,7 +53,8 @@ public class SecurityConfig {
             logger.info("Request URI {}, API Key {}", request.getRequestURI(), apiKey);
             if (VALID_API_KEY.equals(apiKey)
                     || request.getRequestURI().equals("/actuator/health")
-                    ||  request.getRequestURI().equals("/actuator/info")) {
+                    ||  request.getRequestURI().equals("/actuator/info")
+                    ||  request.getRequestURI().equals("/api/kafka/create-topic")) {
                 // Set authentication context
                 SecurityContextHolder.getContext().setAuthentication(
                         new UsernamePasswordAuthenticationToken("user", null, Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")))
