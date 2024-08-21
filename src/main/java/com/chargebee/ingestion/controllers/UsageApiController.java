@@ -35,8 +35,8 @@ public class UsageApiController implements UsageApi {
 
     private final NativeWebRequest request;
 
-    @Autowired
-    private UsageRecordProducer usageRecordProducer;
+//    @Autowired
+//    private UsageRecordProducer usageRecordProducer;
 
 
     @Autowired
@@ -46,7 +46,7 @@ public class UsageApiController implements UsageApi {
 
     @Override
     public ResponseEntity<UsageRecord> ingestUsage(UsageRecord usageRecord) {
-        usageRecordProducer.sendUsageRecord(usageRecord);
+//        usageRecordProducer.sendUsageRecord(usageRecord);
         return new ResponseEntity<>(usageRecord, HttpStatus.CREATED);
     }
 
