@@ -26,9 +26,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/v1/usage").authenticated() // Match the correct endpoint
-                .antMatchers("/actuator/health").permitAll()
-                .antMatchers("/actuator/info").permitAll()
+                .antMatchers("/v1/usage").authenticated() // Secure the usage API endpoint
+                .antMatchers("/api/kafka/create-topic").authenticated() // Secure the Kafka API endpoint
+                .antMatchers("/actuator/health").permitAll()  // Allow access to health endpoint
+                .antMatchers("/actuator/info").permitAll()   // Allow access to info endpoint
                 .anyRequest().denyAll()
                 .and()
                 .addFilterBefore(new ApiKeyFilter(), UsernamePasswordAuthenticationFilter.class)
