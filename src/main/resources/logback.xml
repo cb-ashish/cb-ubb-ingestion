@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <!-- Define appenders for all profiles -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Define CloudWatch appender -->
+    <appender name="CLOUDWATCH" class="com.amazonaws.services.logs.logback.CloudWatchAppender">
+        <logGroupName>ecs-cb-ubb-ingestion-service-logs</logGroupName>
+        <logStreamName>ecs-log-stream</logStreamName>
+        <awsRegion>us-east-1</awsRegion>
+        <layout class="ch.qos.logback.classic.layout.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <!-- Conditional logging setup based on profile -->
+    <if condition='(${spring.profiles.active} == "prod")'>
+        <then>
+            <root level="info">
+                <appender-ref ref="CLOUDWATCH"/>
+                <appender-ref ref="STDOUT"/>
+            </root>
+        </then>
+        <else>
+            <root level="info">
+                <appender-ref ref="STDOUT"/>
+            </root>
+        </else>
+    </if>
+
+</configuration>
