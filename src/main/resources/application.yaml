@@ -1,5 +1,5 @@
 kafka:
-  bootstrap-servers: ${msk_bootstrap_brokers}:9092
+  bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS}:9092
   topic:
     usage-records: usage-records-topic
 management:
