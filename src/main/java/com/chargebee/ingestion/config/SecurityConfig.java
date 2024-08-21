@@ -43,7 +43,7 @@ public class SecurityConfig {
         private static final String API_KEY_HEADER = "X-API-Key";
         private static final String VALID_API_KEY = "KB73Xz7kH7F14vcSZLSoEXcJaL1VnC3xWR67MOtBBMxkkBnkkYoxDSqcKtYTzxB33zHE0p5IZsSsVFJczYxUt0atgTvhAYVyMPZd34JCgeUDj1gQywtxMkC1QXabLGKl";
 
-        private final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+        private final Logger logger = LoggerFactory.getLogger(ApiKeyFilter.class);
 
 
         @Override
