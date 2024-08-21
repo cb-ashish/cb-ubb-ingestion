@@ -139,23 +139,17 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>2.x.x</version>
+            <version>1.7.36</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.x.x</version>
+            <version>1.2.11</version>
         </dependency>
         <dependency>
             <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk-cloudwatchlogs</artifactId>
-            <version>1.x.x</version>
+            <artifactId>aws-java-sdk-cloudwatch</artifactId>
+            <version>1.12.769</version>
         </dependency>
-        <dependency>
-            <groupId>com.amazonaws</groupId>
-            <artifactId>aws-logback-appender</artifactId>
-            <version>1.x.x</version>
-        </dependency>
-
     </dependencies>
 </project>
