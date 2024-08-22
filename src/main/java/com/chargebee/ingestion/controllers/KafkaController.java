@@ -22,7 +22,8 @@ public class KafkaController {
             logger.info("Received request to create topic: {}, partitions: {}, replicationFactor: {}", topicName, partitions, replicationFactor);
             logger.info("Broker - ", kafkaTopicService.getBootstrapServers());
             kafkaTopicService.createTopic(topicName, partitions, replicationFactor);
-            return "Topic created successfully";
+            logger.info("Topic {} creation successful", topicName);
+            return "200";
         } catch (Exception e) {
             logger.info("Topic {} creation failed", topicName);
             return "Error creating topic: " + e.getMessage();
