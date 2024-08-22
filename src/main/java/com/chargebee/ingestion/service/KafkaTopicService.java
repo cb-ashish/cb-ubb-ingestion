@@ -36,6 +36,7 @@ public class KafkaTopicService {
 
     public void createTopic(String topicName, int partitions, short replicationFactor) throws Exception {
         logger.info("Checking if topic '{}' already exists...", topicName);
+        logger.info("Configurations - Broker '{}', Protocol '{}', Sasl '{}' ", bootstrapServers, kafkaSecurityProtocol, kafkaSaslMechanism);
 
         Properties properties = new Properties();
         properties.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
