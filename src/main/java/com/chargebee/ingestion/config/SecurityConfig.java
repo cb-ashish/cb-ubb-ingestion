@@ -27,15 +27,12 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeRequests()
-            .antMatchers("/v1/usage").authenticated()
-            .antMatchers("/api/kafka/create-topic").authenticated()
-            .antMatchers("/v1/info").authenticated()
-            .antMatchers("/actuator/health", "/actuator/info").permitAll()
-            .anyRequest().denyAll()
-            .and()
-            .addFilterBefore(new ApiKeyFilter(), UsernamePasswordAuthenticationFilter.class)
-            .csrf().disable();
+                .authorizeRequests()
+                .antMatchers("/actuator/health", "/actuator/info").permitAll() // Public endpoints
+                .anyRequest().authenticated() // All other requests require authentication
+                .and()
+                .addFilterBefore(new ApiKeyFilter(), UsernamePasswordAuthenticationFilter.class)
+                .csrf().disable();
 
         return http.build();
     }
@@ -46,7 +43,7 @@ public class SecurityConfig {
         protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
                 throws ServletException, IOException {
             String apiKey = request.getHeader("X-API-Key");
-            if (isValidApiKey(apiKey) || isPublicEndpoint(request.getRequestURI())) {
+            if (isPublicEndpoint(request.getRequestURI()) || isValidApiKey(apiKey)) {
                 SecurityContextHolder.getContext().setAuthentication(
                         new UsernamePasswordAuthenticationToken("user", null, Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER")))
                 );
@@ -64,7 +61,8 @@ public class SecurityConfig {
         }
 
         private boolean isPublicEndpoint(String uri) {
-            return "/actuator/health".equals(uri) || "/actuator/info".equals(uri) || "/api/kafka/create-topic".equals(uri);
+            // Return true if the URI matches public endpoints
+            return "/actuator/health".equals(uri) || "/actuator/info".equals(uri);
         }
     }
 }
