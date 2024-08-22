@@ -4,7 +4,10 @@ import com.chargebee.ingestion.models.Error;
 import com.chargebee.ingestion.models.UsageRecord;
 
 
+import com.chargebee.ingestion.service.KafkaTopicService;
 import com.chargebee.ingestion.service.UsageRecordProducer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -33,6 +36,8 @@ import javax.annotation.Generated;
 @RequestMapping("${openapi.usageIngestion.base-path:/v1}")
 public class UsageApiController implements UsageApi {
 
+    private static final Logger logger = LoggerFactory.getLogger(UsageApiController.class);
+
     private final NativeWebRequest request;
 
     @Autowired
@@ -46,6 +51,7 @@ public class UsageApiController implements UsageApi {
 
     @Override
     public ResponseEntity<UsageRecord> ingestUsage(UsageRecord usageRecord) {
+        logger.info("Usage record " + usageRecord.getAttributes().size());
         usageRecordProducer.sendUsageRecord(usageRecord);
         return new ResponseEntity<>(usageRecord, HttpStatus.CREATED);
     }
