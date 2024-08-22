@@ -42,6 +42,9 @@ public class KafkaTopicService {
         properties.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         properties.put(AdminClientConfig.SECURITY_PROTOCOL_CONFIG, kafkaSecurityProtocol);
         properties.put("sasl.mechanism", kafkaSaslMechanism);
+        properties.put("sasl.jaas.config", "software.amazon.msk.auth.iam.IAMLoginModule required;");
+        properties.put("sasl.client.callback.handler.class", "software.amazon.msk.auth.iam.IAMClientCallbackHandler");
+
 
         logger.debug("Kafka AdminClient configuration: {}", properties);
 

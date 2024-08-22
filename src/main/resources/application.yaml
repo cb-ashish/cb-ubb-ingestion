@@ -1,5 +1,5 @@
 kafka:
-  bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS_CONFIG:localhost:9092}
+  bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS_CONFIG:boot-48k4ln60.c1.kafka-serverless.us-east-1.amazonaws.com:9098}
   security:
     protocol: ${KAFKA_SECURITY_PROTOCOL:SASL_SSL}
   sasl:
@@ -8,7 +8,8 @@ kafka:
     usage-records: usage-records-topic
   admin:
     client-id: usage-producer-service
-
+application:
+  version: "1.0.0"
 
 management:
   endpoints:

@@ -5,7 +5,7 @@
  */
 package com.chargebee.ingestion.controllers;
 
-import com.chargebee.ingestion.models.GetInfo200Response;
+import com.chargebee.ingestion.models.ApplicationInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -29,17 +29,17 @@ import java.util.Map;
 import java.util.Optional;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-22T10:52:22.595673+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-22T23:20:51.709090+05:30[Asia/Kolkata]")
 @Validated
-@Tag(name = "Default", description = "the Default API")
-public interface DefaultApi {
+@Tag(name = "Status", description = "the Status API")
+public interface StatusApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
     /**
-     * GET /info : Get Info of the service
+     * GET /status : Get Info of the service
      * Get Info of the service
      *
      * @return OK (status code 200)
@@ -47,10 +47,10 @@ public interface DefaultApi {
     @Operation(
         operationId = "getInfo",
         summary = "Get Info of the service",
-        tags = {  },
+        tags = { "status" },
         responses = {
             @ApiResponse(responseCode = "200", description = "OK", content = {
-                @Content(mediaType = "application/json", schema = @Schema(implementation = GetInfo200Response.class))
+                @Content(mediaType = "application/json", schema = @Schema(implementation = ApplicationInfo.class))
             })
         },
         security = {
@@ -59,16 +59,16 @@ public interface DefaultApi {
     )
     @RequestMapping(
         method = RequestMethod.GET,
-        value = "/info",
+        value = "/status",
         produces = { "application/json" }
     )
-    default ResponseEntity<GetInfo200Response> getInfo(
+    default ResponseEntity<ApplicationInfo> getInfo(
         
     ) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    String exampleString = "{ \"description\" : \"description\", \"status\" : \"status\" }";
+                    String exampleString = "{ \"cpuUsage\" : 5.962134, \"environment\" : \"environment\", \"memoryUsage\" : { \"total\" : 0, \"used\" : 6, \"free\" : 1 }, \"releaseNotes\" : \"releaseNotes\", \"diskSpace\" : { \"total\" : 2, \"used\" : 7, \"free\" : 9 }, \"threadCount\" : 5, \"buildDate\" : \"2000-01-23T04:56:07.000+00:00\", \"serviceName\" : \"serviceName\", \"version\" : \"version\", \"commitHash\" : \"commitHash\", \"uptime\" : \"uptime\" }";
                     ApiUtil.setExampleResponse(request, "application/json", exampleString);
                     break;
                 }

@@ -59,28 +59,21 @@ paths:
       x-accepts: application/json
       x-tags:
         - tag: Usage
-  /info:
+  /status:
     get:
       summary: Get Info of the service
-      tags: []
+      tags:
+        - status
       responses:
         '200':
           description: OK
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    x-stoplight:
-                      id: o4h2c8fr2k2a6
-                  description:
-                    type: string
-                    x-stoplight:
-                      id: wfluj73inyd84
+                $ref: '#/components/schemas/ApplicationInfo'
       operationId: get-info
       description: Get Info of the service
+    parameters: []
 components:
   schemas:
     UsageRecord:
@@ -129,6 +122,72 @@ components:
         type: string
         x-stoplight:
           id: e4b6iv0imzuj5
+      type: object
+    ApplicationInfo:
+      title: ApplicationInfo
+      x-stoplight:
+        id: ol42d6nh2hxr2
+      properties:
+        version:
+          description: The version of the application.
+          type: string
+        buildDate:
+          description: The build date of the application.
+          type: string
+          format: date-time
+        environment:
+          description: 'The environment where the application is running (e.g., production, staging).'
+          type: string
+        uptime:
+          description: The uptime of the application.
+          type: string
+        memoryUsage:
+          description: Current memory usage of the application.
+          type: object
+          properties:
+            total:
+              type: integer
+              description: Total memory allocated.
+            used:
+              type: integer
+              description: Memory currently in use.
+            free:
+              type: integer
+              description: Free memory available.
+        cpuUsage:
+          description: Current CPU usage percentage.
+          type: number
+          format: float
+        threadCount:
+          description: Number of active threads.
+          type: integer
+        diskSpace:
+          description: Disk usage and available space.
+          type: object
+          properties:
+            total:
+              type: integer
+              description: Total disk space.
+            used:
+              type: integer
+              description: Used disk space.
+            free:
+              type: integer
+              description: Free disk space.
+        serviceName:
+          description: Name of the service.
+          type: string
+        commitHash:
+          description: Git commit hash for the current build.
+          type: string
+        releaseNotes:
+          description: Description of the latest changes or updates.
+          type: string
+      required:
+        - version
+        - buildDate
+        - environment
+        - uptime
       type: object
   securitySchemes:
     X-API-Key:

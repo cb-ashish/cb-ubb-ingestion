@@ -28,11 +28,7 @@ ARG JAR_VERSION=1.0.0
 # Copy the built JAR file from the previous stage
 COPY --from=build /cb-ubb-ingestion-service/target/cb-ubb-ingestion-service-${JAR_VERSION}.jar cb-ubb-ingestion-service.jar
 
-# Create a JAAS configuration file for Kafka
-COPY kafka_client_jaas.conf /cb-ubb-ingestion-service/kafka_client_jaas.conf
-
-
 EXPOSE 8080
 
 # Specify the command to run the application
-ENTRYPOINT ["java", "-Djava.security.auth.login.config=/cb-ubb-ingestion-service/kafka_client_jaas.conf", "-jar", "cb-ubb-ingestion-service.jar"]
+ENTRYPOINT ["java", "-jar", "cb-ubb-ingestion-service.jar"]
