@@ -1,7 +1,6 @@
 package com.chargebee.ingestion.controllers;
 
 import com.chargebee.ingestion.models.GetInfo200Response;
-import com.chargebee.ingestion.service.LoggingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,17 +18,13 @@ public class DefaultApiController implements DefaultApi {
 
     private final NativeWebRequest request;
 
-    private final LoggingService loggingService;
-
     @Autowired
-    public DefaultApiController(NativeWebRequest request, LoggingService loggingService) {
+    public DefaultApiController(NativeWebRequest request) {
         this.request = request;
-        this.loggingService = loggingService;
     }
 
     @Override
     public ResponseEntity<GetInfo200Response> getInfo() {
-        loggingService.log("Get Info API");
         return new ResponseEntity<>(new GetInfo200Response().status("200").description("UP"), HttpStatus.OK);
     }
 

@@ -22,18 +22,5 @@ health:
       DOWN: 503
       OUT_OF_SERVICE: 503
 
-
-logging:
-  level:
-    root: INFO
-    com.chargebee: DEBUG  # Set log level for your package
-  pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} %-5level %logger{36} - %msg%n"
-  file:
-    name: cb-ubb-ingestion-service.log
-  cloudwatch:
-    enabled: true
-    log-group: ecs-cb-ubb-ingestion-service-stream-logs
-    log-stream: ecs-cb-ubb-ingestion-service-stream-logs
 aws:
   region: us-east-1  # AWS region for CloudWatch and other services

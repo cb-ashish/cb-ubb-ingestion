@@ -1,3 +1,0 @@
-logging:
-  cloudwatch:
-    enabled: true
