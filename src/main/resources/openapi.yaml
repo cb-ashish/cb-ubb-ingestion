@@ -7,14 +7,14 @@ info:
   title: Usage Ingestion API
   version: 1.0.0
 servers:
-- description: Production Server
-  url: https://api.example.com/v1
-- description: Staging Server
-  url: https://staging-api.example.com/v1
-- description: Local Server
-  url: http://localhost:3000
+  - description: Production Server
+    url: 'https://api.example.com/v1'
+  - description: Staging Server
+    url: 'https://staging-api.example.com/v1'
+  - description: Local Server
+    url: 'http://localhost:3000'
 security:
-- X-API-Key: []
+  - X-API-Key: []
 paths:
   /usage:
     post:
@@ -29,24 +29,24 @@ paths:
             schema:
               properties: {}
               type: object
-        description: ""
+        description: ''
         required: true
       responses:
-        "201":
+        '201':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/UsageRecord'
           description: Usage record created successfully.
-        "400":
+        '400':
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Invalid input.
-        "401":
+        '401':
           description: Unauthorized
-        "500":
+        '500':
           content:
             application/json:
               schema:
@@ -54,11 +54,33 @@ paths:
           description: Internal server error.
       summary: Ingest a new usage record
       tags:
-      - Usage
+        - Usage
       x-content-type: application/json
       x-accepts: application/json
       x-tags:
-      - tag: Usage
+        - tag: Usage
+  /info:
+    get:
+      summary: Get Info of the service
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    x-stoplight:
+                      id: o4h2c8fr2k2a6
+                  description:
+                    type: string
+                    x-stoplight:
+                      id: wfluj73inyd84
+      operationId: get-info
+      description: Get Info of the service
 components:
   schemas:
     UsageRecord:
@@ -66,7 +88,7 @@ components:
         attributes:
           key: attributes
         id: id
-        timestamp: 2000-01-23T04:56:07.000+00:00
+        timestamp: '2000-01-23T04:56:07.000+00:00'
       properties:
         id:
           description: Unique idempotency key for the usage record.
@@ -85,8 +107,8 @@ components:
               id: e4b6iv0imzuj5
           type: object
       required:
-      - attributes
-      - timestamp
+        - attributes
+        - timestamp
       type: object
     Error:
       properties:
@@ -98,8 +120,8 @@ components:
           description: Error message.
           type: string
       required:
-      - code
-      - message
+        - code
+        - message
       type: object
     UsageAttribute:
       additionalProperties:

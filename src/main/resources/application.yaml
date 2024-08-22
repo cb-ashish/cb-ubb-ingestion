@@ -32,7 +32,7 @@ logging:
   file:
     name: cb-ubb-ingestion-service.log
   cloudwatch:
-    enabled: false
+    enabled: true
     log-group: ecs-cb-ubb-ingestion-service-stream-logs
     log-stream: ecs-cb-ubb-ingestion-service-stream-logs
 aws:

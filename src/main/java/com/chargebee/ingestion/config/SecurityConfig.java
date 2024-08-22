@@ -24,7 +24,8 @@ public class SecurityConfig {
         http
             .authorizeRequests()
             .antMatchers("/v1/usage").authenticated()
-            .antMatchers("/api/kafka/create-topic").permitAll()
+            .antMatchers("/api/kafka/create-topic").authenticated()
+            .antMatchers("/v1/info").authenticated()
             .antMatchers("/actuator/health", "/actuator/info").permitAll()
             .anyRequest().denyAll()
             .and()
