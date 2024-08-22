@@ -20,6 +20,7 @@ public class KafkaController {
     public String createTopic(@RequestParam String topicName, @RequestParam int partitions, @RequestParam short replicationFactor) {
         try {
             logger.info("Received request to create topic: {}, partitions: {}, replicationFactor: {}", topicName, partitions, replicationFactor);
+            logger.info("Broker - ", kafkaTopicService.getBootstrapServers());
             kafkaTopicService.createTopic(topicName, partitions, replicationFactor);
             return "Topic created successfully";
         } catch (Exception e) {
