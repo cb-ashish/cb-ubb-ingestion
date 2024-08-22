@@ -51,7 +51,8 @@ public class UsageApiController implements UsageApi {
 
     @Override
     public ResponseEntity<UsageRecord> ingestUsage(UsageRecord usageRecord) {
-        logger.info("Usage record " + usageRecord.getAttributes().size());
+        logger.info("Ingesting usage record with {} attributes", usageRecord.getAttributes().size());
+        logger.debug("Attributes: {}", usageRecord.getAttributes());
         usageRecordProducer.sendUsageRecord(usageRecord);
         return new ResponseEntity<>(usageRecord, HttpStatus.CREATED);
     }
