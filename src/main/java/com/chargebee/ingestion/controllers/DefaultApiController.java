@@ -25,7 +25,7 @@ public class DefaultApiController implements DefaultApi {
 
     @Override
     public ResponseEntity<GetInfo200Response> getInfo() {
-        return new ResponseEntity<>(new GetInfo200Response().status("200").description("UP"), HttpStatus.OK);
+        return new ResponseEntity<>(new GetInfo200Response().status("200").description("UPV1"), HttpStatus.OK);
     }
 
     @Override
