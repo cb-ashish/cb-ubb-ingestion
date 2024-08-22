@@ -4,6 +4,7 @@ import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.admin.ListTopicsResult;
+import org.apache.kafka.clients.admin.CreateTopicsResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class KafkaTopicService {
@@ -35,16 +37,17 @@ public class KafkaTopicService {
 
         try (AdminClient adminClient = AdminClient.create(properties)) {
             if (isTopicExists(adminClient, topicName)) {
-                logger.info("Topic '{}' already exists. Skipping creation.", topicName);
-                return;
+                logger.info("Topic '{}' already exists. Deleting and recreating.", topicName);
+                deleteTopic(adminClient, topicName);
             }
 
-            logger.info("Topic '{}' does not exist. Proceeding with creation.", topicName);
+            logger.info("Topic '{}' does not exist or was deleted. Proceeding with creation.", topicName);
 
             NewTopic newTopic = new NewTopic(topicName, partitions, replicationFactor);
             logger.info("Creating topic: {}", newTopic);
 
-            adminClient.createTopics(Collections.singleton(newTopic)).all().get();
+            CreateTopicsResult createTopicsResult = adminClient.createTopics(Collections.singleton(newTopic));
+            createTopicsResult.all().get();
             logger.info("Topic creation initiated successfully: {}", topicName);
 
             // Wait for the topic to be created
@@ -69,6 +72,14 @@ public class KafkaTopicService {
             logger.error("Error checking if topic '{}' exists: {}", topicName, e.getMessage(), e);
             throw new RuntimeException("Error while checking topic existence", e);
         }
+    }
+
+    private void deleteTopic(AdminClient adminClient, String topicName) throws ExecutionException, InterruptedException {
+        logger.info("Deleting topic '{}'", topicName);
+        adminClient.deleteTopics(Collections.singleton(topicName)).all().get();
+        logger.info("Topic '{}' deletion initiated", topicName);
+        // Wait for topic deletion to complete if necessary
+        // Consider adding a similar wait mechanism as in waitForTopicToBeCreated if required
     }
 
     private void waitForTopicToBeCreated(AdminClient adminClient, String topicName) throws InterruptedException {

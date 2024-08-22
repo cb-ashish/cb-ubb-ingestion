@@ -24,7 +24,7 @@ public class KafkaController {
             kafkaTopicService.createTopic(topicName, partitions, replicationFactor);
             return "Topic created successfully";
         } catch (Exception e) {
-            logger.info("Topic {} created successfully", topicName);
+            logger.info("Topic {} creation failed", topicName);
             return "Error creating topic: " + e.getMessage();
         }
     }
