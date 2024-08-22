@@ -1,4 +1,3 @@
-
 package com.chargebee.ingestion.config;
 
 import com.chargebee.ingestion.models.UsageRecord;
@@ -23,12 +22,22 @@ public class KafkaProducerConfig {
     @Value("${kafka.bootstrap-servers}")
     private String bootstrapServers;
 
+    @Value("${kafka.security.protocol}")
+    private String kafkaSecurityProtocol;
+
+    @Value("${kafka.sasl.mechanism}")
+    private String kafkaSaslMechanism;
+
     @Bean
     public ProducerFactory<String, UsageRecord> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
+        configProps.put("security.protocol", kafkaSecurityProtocol);
+        configProps.put("sasl.mechanism", kafkaSaslMechanism);
+        // If using SASL with username and password, add these properties as well:
+        // configProps.put("sasl.jaas.config", "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"<username>\" password=\"<password>\";");
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 

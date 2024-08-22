@@ -1,7 +1,15 @@
 kafka:
   bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS_CONFIG:localhost:9092}
+  security:
+    protocol: ${KAFKA_SECURITY_PROTOCOL}
+  sasl:
+    mechanism: ${KAFKA_SASL_MECHANISM}
   topic:
     usage-records: usage-records-topic
+  admin:
+    client-id: usage-producer-service
+
+
 management:
   endpoints:
     web:

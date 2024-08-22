@@ -24,6 +24,12 @@ public class KafkaTopicService {
     @Value("${kafka.bootstrap-servers}")
     private String bootstrapServers;
 
+    @Value("${kafka.security.protocol}")
+    private String kafkaSecurityProtocol;
+
+    @Value("${kafka.sasl.mechanism}")
+    private String kafkaSaslMechanism;
+
     public String getBootstrapServers() {
         return bootstrapServers;
     }
@@ -33,6 +39,9 @@ public class KafkaTopicService {
 
         Properties properties = new Properties();
         properties.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        properties.put(AdminClientConfig.SECURITY_PROTOCOL_CONFIG, kafkaSecurityProtocol);
+        properties.put("sasl.mechanism", kafkaSaslMechanism);
+
         logger.debug("Kafka AdminClient configuration: {}", properties);
 
         try (AdminClient adminClient = AdminClient.create(properties)) {
