@@ -5,7 +5,7 @@ kafka:
   sasl:
     mechanism: ${KAFKA_SASL_MECHANISM:AWS_MSK_IAM}
   topic:
-    usage-records: usage-records-topic
+    usage-records: usages
   admin:
     client-id: usage-producer-service
 application:

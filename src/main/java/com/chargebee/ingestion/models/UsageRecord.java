@@ -23,19 +23,25 @@ import javax.annotation.Generated;
  * UsageRecord
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-20T10:37:27.792356+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-23T22:24:33.752125+05:30[Asia/Kolkata]")
 public class UsageRecord {
 
   @JsonProperty("id")
   private String id;
 
-  @JsonProperty("timestamp")
+  @JsonProperty("usage_timestamp")
   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime timestamp;
+  private OffsetDateTime usageTimestamp;
 
   @JsonProperty("attributes")
   @Valid
   private Map<String, String> attributes = new HashMap<>();
+
+  @JsonProperty("subscription_id")
+  private String subscriptionId;
+
+  @JsonProperty("site_id")
+  private String siteId;
 
   public UsageRecord id(String id) {
     this.id = id;
@@ -56,23 +62,23 @@ public class UsageRecord {
     this.id = id;
   }
 
-  public UsageRecord timestamp(OffsetDateTime timestamp) {
-    this.timestamp = timestamp;
+  public UsageRecord usageTimestamp(OffsetDateTime usageTimestamp) {
+    this.usageTimestamp = usageTimestamp;
     return this;
   }
 
   /**
    * Indicates the usage record timestamp.
-   * @return timestamp
+   * @return usageTimestamp
   */
   @NotNull @Valid 
-  @Schema(name = "timestamp", description = "Indicates the usage record timestamp.", required = true)
-  public OffsetDateTime getTimestamp() {
-    return timestamp;
+  @Schema(name = "usage_timestamp", description = "Indicates the usage record timestamp.", required = true)
+  public OffsetDateTime getUsageTimestamp() {
+    return usageTimestamp;
   }
 
-  public void setTimestamp(OffsetDateTime timestamp) {
-    this.timestamp = timestamp;
+  public void setUsageTimestamp(OffsetDateTime usageTimestamp) {
+    this.usageTimestamp = usageTimestamp;
   }
 
   public UsageRecord attributes(Map<String, String> attributes) {
@@ -99,6 +105,44 @@ public class UsageRecord {
     this.attributes = attributes;
   }
 
+  public UsageRecord subscriptionId(String subscriptionId) {
+    this.subscriptionId = subscriptionId;
+    return this;
+  }
+
+  /**
+   * Get subscriptionId
+   * @return subscriptionId
+  */
+  
+  @Schema(name = "subscription_id", required = false)
+  public String getSubscriptionId() {
+    return subscriptionId;
+  }
+
+  public void setSubscriptionId(String subscriptionId) {
+    this.subscriptionId = subscriptionId;
+  }
+
+  public UsageRecord siteId(String siteId) {
+    this.siteId = siteId;
+    return this;
+  }
+
+  /**
+   * Get siteId
+   * @return siteId
+  */
+  
+  @Schema(name = "site_id", required = false)
+  public String getSiteId() {
+    return siteId;
+  }
+
+  public void setSiteId(String siteId) {
+    this.siteId = siteId;
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -109,13 +153,15 @@ public class UsageRecord {
     }
     UsageRecord usageRecord = (UsageRecord) o;
     return Objects.equals(this.id, usageRecord.id) &&
-        Objects.equals(this.timestamp, usageRecord.timestamp) &&
-        Objects.equals(this.attributes, usageRecord.attributes);
+        Objects.equals(this.usageTimestamp, usageRecord.usageTimestamp) &&
+        Objects.equals(this.attributes, usageRecord.attributes) &&
+        Objects.equals(this.subscriptionId, usageRecord.subscriptionId) &&
+        Objects.equals(this.siteId, usageRecord.siteId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, timestamp, attributes);
+    return Objects.hash(id, usageTimestamp, attributes, subscriptionId, siteId);
   }
 
   @Override
@@ -123,8 +169,10 @@ public class UsageRecord {
     StringBuilder sb = new StringBuilder();
     sb.append("class UsageRecord {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
+    sb.append("    usageTimestamp: ").append(toIndentedString(usageTimestamp)).append("\n");
     sb.append("    attributes: ").append(toIndentedString(attributes)).append("\n");
+    sb.append("    subscriptionId: ").append(toIndentedString(subscriptionId)).append("\n");
+    sb.append("    siteId: ").append(toIndentedString(siteId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -82,11 +82,12 @@ components:
           key: attributes
         id: id
         timestamp: '2000-01-23T04:56:07.000+00:00'
+      type: object
       properties:
         id:
           description: Unique idempotency key for the usage record.
           type: string
-        timestamp:
+        usage_timestamp:
           description: Indicates the usage record timestamp.
           format: date-time
           type: string
@@ -99,10 +100,17 @@ components:
             x-stoplight:
               id: e4b6iv0imzuj5
           type: object
+        subscription_id:
+          type: string
+          x-stoplight:
+            id: raum5egsfw7kj
+        site_id:
+          type: string
+          x-stoplight:
+            id: 5ehezwxicycij
       required:
+        - usage_timestamp
         - attributes
-        - timestamp
-      type: object
     Error:
       properties:
         code:
