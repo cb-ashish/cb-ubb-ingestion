@@ -36,8 +36,8 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         configProps.put("security.protocol", kafkaSecurityProtocol);
         configProps.put("sasl.mechanism", kafkaSaslMechanism);
-        // If using SASL with username and password, add these properties as well:
-        // configProps.put("sasl.jaas.config", "org.apache.kafka.common.security.scram.ScramLoginModule required username=\"<username>\" password=\"<password>\";");
+        configProps.put("sasl.jaas.config", "software.amazon.msk.auth.iam.IAMLoginModule required;");
+        configProps.put("sasl.client.callback.handler.class", "software.amazon.msk.auth.iam.IAMClientCallbackHandler");
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
