@@ -39,12 +39,12 @@ public class KafkaProducerConfig {
         configProps.put("sasl.jaas.config", "software.amazon.msk.auth.iam.IAMLoginModule required;");
         configProps.put("sasl.client.callback.handler.class", "software.amazon.msk.auth.iam.IAMClientCallbackHandler");
 
-
         configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AWSKafkaAvroSerializer.class.getName());
         configProps.put("schema.registry.url", "https://vpce-073db7a998a29098f-spv7tq7b.glue.us-east-1.vpce.amazonaws.com");
         configProps.put("aws.region", "us-east-1");
-        configProps.put("registry.name", "default");
+        configProps.put("registry.name", "default"); // This should match your registry name
+
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 
