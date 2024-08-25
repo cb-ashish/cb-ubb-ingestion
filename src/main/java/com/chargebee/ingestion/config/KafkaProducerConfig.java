@@ -44,7 +44,6 @@ public class KafkaProducerConfig {
         configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AWSKafkaAvroSerializer.class.getName());
         configProps.put("schema.registry.url", "https://vpce-073db7a998a29098f-spv7tq7b.glue.us-east-1.vpce.amazonaws.com");
         configProps.put("aws.region", "us-east-1");
-        configProps.put("value.subject.name.strategy", "io.confluent.kafka.serializers.subject.TopicRecordNameStrategy");
         configProps.put("registry.name", "default");
         return new DefaultKafkaProducerFactory<>(configProps);
     }
