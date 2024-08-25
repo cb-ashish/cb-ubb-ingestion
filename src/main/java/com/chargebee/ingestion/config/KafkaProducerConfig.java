@@ -1,5 +1,7 @@
 package com.chargebee.ingestion.config;
 
+import com.amazonaws.services.schemaregistry.common.AWSSchemaNamingStrategy;
+import com.amazonaws.services.schemaregistry.serializers.avro.AWSKafkaAvroSerializer;
 import com.chargebee.ingestion.models.UsageRecord;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -32,12 +34,18 @@ public class KafkaProducerConfig {
     public ProducerFactory<String, UsageRecord> producerFactory() {
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);
         configProps.put("security.protocol", kafkaSecurityProtocol);
         configProps.put("sasl.mechanism", kafkaSaslMechanism);
         configProps.put("sasl.jaas.config", "software.amazon.msk.auth.iam.IAMLoginModule required;");
         configProps.put("sasl.client.callback.handler.class", "software.amazon.msk.auth.iam.IAMClientCallbackHandler");
+
+
+        configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AWSKafkaAvroSerializer.class.getName());
+        configProps.put("schema.registry.url", "https://vpce-073db7a998a29098f-spv7tq7b.glue.us-east-1.vpce.amazonaws.com");
+        configProps.put("aws.region", "us-east-1");
+        configProps.put("value.subject.name.strategy", "io.confluent.kafka.serializers.subject.TopicRecordNameStrategy");
+        configProps.put("registry.name", "default");
         return new DefaultKafkaProducerFactory<>(configProps);
     }
 

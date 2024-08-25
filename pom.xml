@@ -149,7 +149,25 @@
             <artifactId>aws-java-sdk</artifactId>
             <version>1.12.770</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.avro/avro -->
+        <dependency>
+            <groupId>org.apache.avro</groupId>
+            <artifactId>avro</artifactId>
+            <version>1.12.0</version>
+        </dependency>
 
+        <dependency>
+            <groupId>software.amazon.glue</groupId>
+            <artifactId>schema-registry-kafkaconnect-converter</artifactId>
+            <version>1.1.20</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/software.amazon.glue/schema-registry-serde -->
+        <dependency>
+            <groupId>software.amazon.glue</groupId>
+            <artifactId>schema-registry-serde</artifactId>
+            <version>1.1.20</version>
+        </dependency>
 
     </dependencies>
 </project>
