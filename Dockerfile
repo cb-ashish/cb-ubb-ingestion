@@ -24,6 +24,10 @@ WORKDIR /cb-ubb-ingestion-service
 
 # Define a build argument for the JAR file version
 ARG JAR_VERSION=1.0.0
+ARG SPRING_PROFILE=prod
+# Set environment variables for the Spring profile and version
+ENV SPRING_PROFILES_ACTIVE=${SPRING_PROFILE}
+ENV APPLICATION_VERSION=${JAR_VERSION}
 
 # Copy the built JAR file from the previous stage
 COPY --from=build /cb-ubb-ingestion-service/target/cb-ubb-ingestion-service-${JAR_VERSION}.jar cb-ubb-ingestion-service.jar

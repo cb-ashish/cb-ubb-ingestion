@@ -1,0 +1,14 @@
+{
+  "type": "record",
+  "name": "UsageRecord",
+  "fields": [
+    {"name": "id", "type": "string"},
+    {"name": "usage_timestamp", "type": "long"},
+    {"name": "attributes", "type": {
+      "type": "map",
+      "values": "string"
+    }},
+    {"name": "subscription_id", "type": "string"},
+    {"name": "site_id", "type": "string"}
+  ]
+}

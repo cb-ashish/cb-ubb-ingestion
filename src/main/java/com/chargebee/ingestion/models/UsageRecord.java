@@ -4,11 +4,9 @@ import java.net.URI;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import java.time.OffsetDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.openapitools.jackson.nullable.JsonNullable;
 import java.time.OffsetDateTime;
 import javax.validation.Valid;
@@ -23,15 +21,14 @@ import javax.annotation.Generated;
  * UsageRecord
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-23T22:24:33.752125+05:30[Asia/Kolkata]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2024-08-25T22:21:16.546+05:30[Asia/Kolkata]")
 public class UsageRecord {
 
   @JsonProperty("id")
   private String id;
 
   @JsonProperty("usage_timestamp")
-  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-  private OffsetDateTime usageTimestamp;
+  private Long usageTimestamp;
 
   @JsonProperty("attributes")
   @Valid
@@ -62,7 +59,7 @@ public class UsageRecord {
     this.id = id;
   }
 
-  public UsageRecord usageTimestamp(OffsetDateTime usageTimestamp) {
+  public UsageRecord usageTimestamp(Long usageTimestamp) {
     this.usageTimestamp = usageTimestamp;
     return this;
   }
@@ -71,13 +68,13 @@ public class UsageRecord {
    * Indicates the usage record timestamp.
    * @return usageTimestamp
   */
-  @NotNull @Valid 
+  @NotNull 
   @Schema(name = "usage_timestamp", description = "Indicates the usage record timestamp.", required = true)
-  public OffsetDateTime getUsageTimestamp() {
+  public Long getUsageTimestamp() {
     return usageTimestamp;
   }
 
-  public void setUsageTimestamp(OffsetDateTime usageTimestamp) {
+  public void setUsageTimestamp(Long usageTimestamp) {
     this.usageTimestamp = usageTimestamp;
   }
 

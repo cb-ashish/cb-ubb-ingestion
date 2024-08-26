@@ -89,8 +89,8 @@ components:
           type: string
         usage_timestamp:
           description: Indicates the usage record timestamp.
-          format: date-time
-          type: string
+          type: integer
+          format: int64
           x-stoplight:
             id: qypl1nictgm27
         attributes:

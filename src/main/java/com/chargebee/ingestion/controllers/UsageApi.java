@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Optional;
 import javax.annotation.Generated;
 
@@ -72,7 +73,7 @@ public interface UsageApi {
     )
     default ResponseEntity<UsageRecord> ingestUsage(
         @Parameter(name = "UsageRecord", description = "", required = true) @Valid @RequestBody UsageRecord usageRecord
-    ) {
+    ) throws IOException {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {

@@ -20,32 +20,37 @@ public class ApplicationInfoService {
     @Value("${application.version}")
     private String version;
 
+    @Value("${spring.profiles.active}")
+    private String profile;
+
+    @Value("${application.name}")
+    private String applicationName;
+
+
     public ApplicationInfo getApplicationInfo() {
         Properties properties = System.getProperties();
         OperatingSystemMXBean osBean = ManagementFactory.getOperatingSystemMXBean();
         ThreadMXBean threadBean = ManagementFactory.getThreadMXBean();
 
         OffsetDateTime buildDate = OffsetDateTime.now(ZoneId.of("UTC")); // Example, adjust as needed
-        String environment = properties.getProperty("application.environment", "unknown");
         String uptime = formatUptime(ManagementFactory.getRuntimeMXBean().getUptime());
         ApplicationInfoMemoryUsage memoryUsage = getMemoryUsage();
         float cpuUsage = getCpuUsage(osBean);
         int threadCount = threadBean.getThreadCount();
         ApplicationInfoDiskSpace diskSpace = getDiskSpace();
-        String serviceName = properties.getProperty("application.name", "unknown");
         String commitHash = properties.getProperty("application.commitHash", "unknown");
         String releaseNotes = properties.getProperty("application.releaseNotes", "No release notes available");
 
         return new ApplicationInfo()
                 .version(version)
                 .buildDate(buildDate)
-                .environment(environment)
+                .environment(profile)
                 .uptime(uptime)
                 .memoryUsage(memoryUsage)
                 .cpuUsage(cpuUsage)
                 .threadCount(threadCount)
                 .diskSpace(diskSpace)
-                .serviceName(serviceName)
+                .serviceName(applicationName)
                 .commitHash(commitHash)
                 .releaseNotes(releaseNotes);
     }

@@ -1,0 +1,75 @@
+version: '3'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper:latest
+    container_name: zookeeper
+    ports:
+      - "2181:2181"
+    networks:
+      - app-network
+
+
+  kafka:
+    image: wurstmeister/kafka:latest
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
+      KAFKA_LISTENER_NAME_REPLICA: INSIDE
+      KAFKA_LISTENER_NAME_INTERNAL: INSIDE
+      KAFKA_LISTENER_NAME_EXTERNAL: OUTSIDE
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9093,OUTSIDE://kafka:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+    networks:
+      - app-network
+  schema-registry:
+    image: confluentinc/cp-schema-registry:latest
+    container_name: schema-registry
+    depends_on:
+      - kafka
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka:9092
+      SCHEMA_REGISTRY_LISTENER: http://0.0.0.0:8081
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LOG4J_LOGGERS: "kafka.errors=ERROR,kafka.request.logger=ERROR"
+    networks:
+      - app-network
+  spring-boot-app:
+    image: cb-ubb-ingestion-service
+    container_name: cb-ubb-ingestion-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        JAR_VERSION: 1.0.0
+        SPRING_PROFILE: local
+    depends_on:
+      - kafka
+    networks:
+      - app-network
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+      KAFKA_SECURITY_PROTOCOL: PLAINTEXT
+      KAFKA_SASL_MECHANISM: GSSAPI # Adjust as needed
+      KAFKA_SCHEMA_REGISTRY_URL: https://vpce-073db7a998a29098f-spv7tq7b.glue.us-east-1.vpce.amazonaws.com
+      SPRING_PROFILES_ACTIVE: local
+      AWS_REGION: us-east-1
+      AWS_ACCESS_KEY_ID: <YOUR_LOCAL_KEY>
+      AWS_SECRET_ACCESS_KEY: <YOUR_LOCAL_KEY>
+      AWS_SESSION_TOKEN: <YOUR_LOCAL_KEY>
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=0.0.0.0:6005"
+    ports:
+      - "8080:8080"
+      - "6005:6005"       # Debug port
+    command: [ "java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=6005", "-jar", "cb-ubb-ingestion-service.jar" ]
+
+networks:
+  app-network:
+    driver: bridge

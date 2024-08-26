@@ -38,7 +38,8 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build --build-arg JAR_VERSION=1.0.0 -t cb-ubb-ingestion-service .
+          VERSION=$(date +%Y%m%d%H%M%S)
+          docker build --build-arg JAR_VERSION=$VERSION --build-arg SPRING_PROFILE=prod -t cb-ubb-ingestion-service .
           docker tag cb-ubb-ingestion-service:latest ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cb-ubb-ingestion-service:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/cb-ubb-ingestion-service:latest
 

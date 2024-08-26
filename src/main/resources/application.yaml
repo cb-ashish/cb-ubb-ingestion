@@ -8,8 +8,11 @@ kafka:
     usage-records: usages
   admin:
     client-id: usage-producer-service
+  schema:
+    registry-url: ${KAFKA_SCHEMA_REGISTRY_URL:localhost:8081}
 application:
-  version: "1.0.1"
+  version: "${APPLICATION_VERSION:1.0.0}"
+  name: cb-ubb-ingestion-service
 
 management:
   endpoints:
@@ -25,6 +28,8 @@ spring:
       dispatcher-types: async, error, request
     ignore:
       [ "/actuator/health" ]
+  profiles:
+    active: "${SPRING_PROFILES_ACTIVE:default}"
 health:
   status:
     http-mapping:

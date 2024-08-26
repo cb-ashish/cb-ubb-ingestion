@@ -33,6 +33,8 @@ public class KafkaTopicService {
     public String getBootstrapServers() {
         return bootstrapServers;
     }
+    @Value("${spring.profiles.active}")
+    private String profile;
 
     public void createTopic(String topicName, int partitions, short replicationFactor) throws Exception {
         logger.info("Checking if topic '{}' already exists...", topicName);
@@ -42,10 +44,12 @@ public class KafkaTopicService {
         properties.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         properties.put(AdminClientConfig.SECURITY_PROTOCOL_CONFIG, kafkaSecurityProtocol);
         properties.put("sasl.mechanism", kafkaSaslMechanism);
-        properties.put("sasl.jaas.config", "software.amazon.msk.auth.iam.IAMLoginModule required;");
-        properties.put("sasl.client.callback.handler.class", "software.amazon.msk.auth.iam.IAMClientCallbackHandler");
-
-
+        logger.info("Topic Creation profile {}", profile);
+        logger.info("Topic Creation properties {}", properties);
+        if (!profile.equals("local")) {
+            properties.put("sasl.jaas.config", "software.amazon.msk.auth.iam.IAMLoginModule required;");
+            properties.put("sasl.client.callback.handler.class", "software.amazon.msk.auth.iam.IAMClientCallbackHandler");
+        }
         logger.debug("Kafka AdminClient configuration: {}", properties);
 
         try (AdminClient adminClient = AdminClient.create(properties)) {
@@ -67,7 +71,7 @@ public class KafkaTopicService {
             waitForTopicToBeCreated(adminClient, topicName);
         } catch (Exception exception) {
             logger.error("Failed to create topic: {}. Error: {}", topicName, exception.getMessage(), exception);
-            throw exception;  // Optional: rethrow the exception if you want it to propagate
+            throw exception;
         }
     }
 

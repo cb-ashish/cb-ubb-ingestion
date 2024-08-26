@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import java.io.IOException;
 import java.util.Optional;
 import javax.annotation.Generated;
 
@@ -34,7 +35,7 @@ public class UsageApiController implements UsageApi {
     }
 
     @Override
-    public ResponseEntity<UsageRecord> ingestUsage(UsageRecord usageRecord) {
+    public ResponseEntity<UsageRecord> ingestUsage(UsageRecord usageRecord) throws IOException {
         logger.info("Ingesting usage record with {} attributes", usageRecord.getAttributes().size());
         logger.debug("Attributes: {}", usageRecord.getAttributes());
         usageRecordProducer.sendUsageRecord(usageRecord);
