@@ -58,13 +58,27 @@ public class KafkaProducerConfig {
             configProps.put("sasl.client.callback.handler.class", "software.amazon.msk.auth.iam.IAMClientCallbackHandler");
         }
 
-        configProps.put("value.converter.registry.name", "default");
+//        configProps.put("value.converter.registry.name", "default");
         configProps.put("value.converter.compatibility", "BACKWARD");
         configProps.put("value.converter.schemas.enable", true);
         configProps.put("value.converter.schemaAutoRegistrationEnabled", true);
         configProps.put("value.converter.endpoint", schemaRegistryUrl);
         configProps.put("value.converter.region", "us-east-1");
         configProps.put("value.converter.avroRecordType", "GENERIC_RECORD");
+
+
+
+//        // AWS Glue Schema Registry-specific properties
+//        configProps.put(AWSSchemaRegistryConstants.DATA_FORMAT, "AVRO");
+//        configProps.put(AWSSchemaRegistryConstants.SCHEMA_NAME, "usages");
+        configProps.put(AWSSchemaRegistryConstants.REGISTRY_NAME, "default");
+//        configProps.put(AWSSchemaRegistryConstants.AVRO_RECORD_TYPE, AvroRecordType.GENERIC_RECORD.getName());
+//        configProps.put(AWSSchemaRegistryConstants.COMPATIBILITY_SETTING, Compatibility.BACKWARD.name());
+//        configProps.put(AWSSchemaRegistryConstants.SCHEMA_AUTO_REGISTRATION_SETTING, false);
+//        configProps.put(AWSSchemaRegistryConstants.AWS_ENDPOINT, schemaRegistryUrl);
+//        configProps.put(AWSSchemaRegistryConstants.AWS_REGION, "us-east-1");
+//
+
 
         logger.info("Producer Creation properties {}", configProps);
         return new DefaultKafkaProducerFactory<>(configProps);
